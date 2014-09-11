@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+  		<title>Things We Wish The iPhone6 Would Do </title>
+    	<link rel="stylesheet" type="text/css" href="libdist/chartist.min.css" />
+    	<script src="libdist/chartist.min.js"></script>
+  	</head>
+
+<body>
+
+<style type="text/css">
+
+		.ct-chart.ct-octave{
+			border:			2px, black 
+		};
+
+</style>
+
+
+<div class="ct-chart ct-octave">
+
+<script type="text/javascript">
+
+
+//line chart
+		var data = {
+  			labels: ['Week1', 'Week2', 'Week3', 'Week4', 'Week5', 'Week6'],
+  			series: [
+    		{
+    		name: "First set of data",
+    		data: [5, 4, 3, 7, 5, 10]
+    		},
+    		{
+    		name: "Second set of data",
+    		data: [3, 2, 9, 5, 4, 6]
+    		},
+    		{
+    		name: "Third set of data",
+    		data: [2, 1, -3, -4, -2, 0]
+  			}]
+		};
+
+// We are setting a few options for our chart and override the defaults
+		var options = {
+  // Don't draw the line chart points
+  			showPoint: true,
+  // Disable line smoothing
+  			lineSmooth: true,
+  			axisX: {
+    			showGrid: true,
+    			showLabel: true
+  			},
+  			axisY: {
+    // Lets offset the chart a bit from the labels
+    			offset: 40,
+    // The label interpolation function enables you to modify the values
+    // used for the labels on each axis. Here we are converting the
+    // values into million pound.
+    			labelInterpolationFnc: function(value) {
+      			return '$' + value + 'm';
+    			}
+  			}
+		};
+
+Chartist.Line('.ct-chart', data, options);
+
+//add tooltips to each data point
+		
+				var $toolTip = $chart
+					.append('<div class="tooltip"></div>')
+					.find('.tooltip')
+					.hide();
+
+	$chart.on('mouseenter', '.ct-point', function() {
+
+				var $point = $(this),
+					value = $point.attr('ct:value'),
+					seriesName = $point.parent().attr('ct:series-name');
+
+				$point.animate({'stroke-width': '50px'}, 300, 'easeOutQuad');
+				$toolTip.html(seriesName + '<br>' + value).show();
+
+			});
+
+	$chart.on('mouseleave', '.ct-point', function() {
+
+				var $point = $(this);
+				$point.animate({'stroke-width': '20px'}, 300, 'easeOutQuad');
+				$toolTip.hide();
+
+	});
+
+	$chart.on('mousemove', function(event) {
+
+		$toolTip.css({
+			left: event.offsetX - $toolTip.width() / 2 - 10,
+			top: event.offsetY - $toolTip.height() - 40
+		});
+	});
+
+// All you need to do is pass your configuration as third parameter to the chart function
+
+</script>
+</div>
+
+</body>
+</html>
