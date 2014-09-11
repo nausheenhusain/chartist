@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-  		<title>Things We Wish The iPhone6 Would Do </title>
-    	<link rel="stylesheet" type="text/css" href="libdist/chartist.min.css" />
-    	<script src="libdist/chartist.min.js"></script>
-  	</head>
+  <head>
+      <title>How Much Money I Get</title>
+      <link rel="stylesheet" type="text/css" href="libdist/chartist.min.css" />
+      <script src="libdist/chartist.min.js"></script>
+    </head>
 
 <body>
 
 <style type="text/css">
-
-		.ct-chart .ct-octave{
-			border:			2px, black 
-		};
-
+    .ct-chart .ct-octave{
+      border:     2px, black 
+    };
 </style>
+
 
 
 <div class="ct-chart ct-octave">
@@ -23,9 +22,20 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-//line chart
-		
-  // We are setting a few options for our chart and override the defaults
+//add tooltips to each data point
+
+    var $chart = $("ct-chart").wrap("chart", function(){
+          console.log();
+    });
+
+        
+
+    var $toolTip = $chart
+        .append('<div class="tooltip"></div>')
+        .find('.tooltip')
+        .hide();
+
+// We are setting a few options for our chart and override the defaults
     var options = {
         showPoint: true,
         lineSmooth: true,
@@ -34,11 +44,11 @@
           showLabel: true
         },
         axisY: {
-          offset: 40,
-    
-    // The label interpolation function enables you to modify the values used for the labels on each axis. Here we are converting the values into million pound.
+          offset: 20,
+
+// The label interpolation function enables you to modify the values used for the labels on each axis. Here we are converting the values into million pound.
           labelInterpolationFnc: function(value) {
-            return '$' + value + 'm';
+            return '$' + value;
           }
         }
     };
@@ -47,68 +57,75 @@
   Chartist.Line('.ct-chart', {
 
     //data
-    labels: ['1', '2', '3', '4', '5', '6'],
+    labels: ['5', '12', '15', '20', '25'],
     series: [
       {
-        name: "First set of data",
-        data: [5, 4, 3, 7, 5, 10]
+        name: "Dad",
+        data: [.25, 5, 40, 55, 20]
       },
       {
-        name: "Second set of data",
-        data: [3, 2, 9, 5, 4, 6]
+        name: "Mom",
+        data: [.25, 10, 20, 20, 20]
       },
       {
-        name: "Third set of data",
-        data: [2, 1, -3, -4, -2, 0]
+        name: "Dadi",
+        data: [20, 20, 20, 20, 20]
       }
     ]
   }, options);
 
+//interactivity here
+
+  $chart.on('mouseenter', '.ct-point', function() {
+
+        var $point = $(this),
+          value = $point.attr('ct:value'),
+          seriesName = $point.parent().attr('ct:series-name');
+
+        $point.animate({'stroke-width': '50px'}, 300, 'easeOutQuad');
+        $toolTip.html(seriesName + '<br>' + value).show();
+
+      });
+
+  $chart.on('mouseleave', '.ct-point', function() {
+
+        var $point = $(this);
+        $point.animate({'stroke-width': '20px'}, 300, 'easeOutQuad');
+        $toolTip.hide();
+
+  });
+
+  $chart.on('mousemove', function(event) {
+
+    $toolTip.css({
+      left: event.offsetX - $toolTip.width() / 2 - 10,
+      top: event.offsetY - $toolTip.height() - 40
+    });
+  });
 
 // Chartist.Line('.ct-chart', data, options);
-
-//add tooltips to each data point
-		
-				var $chart = $("ct-chart").wrap("chart", function(){
-          
-        });
-
-        var $toolTip = $chart
-					.append('<div class="tooltip"></div>')
-					.find('.tooltip')
-					.hide();
-
-	$chart.on('mouseenter', '.ct-point', function() {
-
-				var $point = $(this),
-					value = $point.attr('ct:value'),
-					seriesName = $point.parent().attr('ct:series-name');
-
-				$point.animate({'stroke-width': '50px'}, 300, 'easeOutQuad');
-				$toolTip.html(seriesName + '<br>' + value).show();
-
-			});
-
-	$chart.on('mouseleave', '.ct-point', function() {
-
-				var $point = $(this);
-				$point.animate({'stroke-width': '20px'}, 300, 'easeOutQuad');
-				$toolTip.hide();
-
-	});
-
-	$chart.on('mousemove', function(event) {
-
-		$toolTip.css({
-			left: event.offsetX - $toolTip.width() / 2 - 10,
-			top: event.offsetY - $toolTip.height() - 40
-		});
-	});
 
 // All you need to do is pass your configuration as third parameter to the chart function
 
 </script>
 </div>
+
+<h2>How Much Money I Get From Family Members If I Ask For $20 At Various Ages</h2>
+
+<h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
+
+
+
 
 </body>
 </html>
