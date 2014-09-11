@@ -11,7 +11,7 @@
 
 <style type="text/css">
 
-		.ct-chart.ct-octave{
+		.ct-chart .ct-octave{
 			border:			2px, black 
 		};
 
@@ -20,54 +20,60 @@
 
 <div class="ct-chart ct-octave">
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-
 //line chart
-		var data = {
-  			labels: ['Week1', 'Week2', 'Week3', 'Week4', 'Week5', 'Week6'],
-  			series: [
-    		{
-    		name: "First set of data",
-    		data: [5, 4, 3, 7, 5, 10]
-    		},
-    		{
-    		name: "Second set of data",
-    		data: [3, 2, 9, 5, 4, 6]
-    		},
-    		{
-    		name: "Third set of data",
-    		data: [2, 1, -3, -4, -2, 0]
-  			}]
-		};
+		
+  // We are setting a few options for our chart and override the defaults
+    var options = {
+        showPoint: true,
+        lineSmooth: true,
+        axisX: {
+          showGrid: true,
+          showLabel: true
+        },
+        axisY: {
+          offset: 40,
+    
+    // The label interpolation function enables you to modify the values used for the labels on each axis. Here we are converting the values into million pound.
+          labelInterpolationFnc: function(value) {
+            return '$' + value + 'm';
+          }
+        }
+    };
 
-// We are setting a few options for our chart and override the defaults
-		var options = {
-  // Don't draw the line chart points
-  			showPoint: true,
-  // Disable line smoothing
-  			lineSmooth: true,
-  			axisX: {
-    			showGrid: true,
-    			showLabel: true
-  			},
-  			axisY: {
-    // Lets offset the chart a bit from the labels
-    			offset: 40,
-    // The label interpolation function enables you to modify the values
-    // used for the labels on each axis. Here we are converting the
-    // values into million pound.
-    			labelInterpolationFnc: function(value) {
-      			return '$' + value + 'm';
-    			}
-  			}
-		};
 
-Chartist.Line('.ct-chart', data, options);
+  Chartist.Line('.ct-chart', {
+
+    //data
+    labels: ['1', '2', '3', '4', '5', '6'],
+    series: [
+      {
+        name: "First set of data",
+        data: [5, 4, 3, 7, 5, 10]
+      },
+      {
+        name: "Second set of data",
+        data: [3, 2, 9, 5, 4, 6]
+      },
+      {
+        name: "Third set of data",
+        data: [2, 1, -3, -4, -2, 0]
+      }
+    ]
+  }, options);
+
+
+// Chartist.Line('.ct-chart', data, options);
 
 //add tooltips to each data point
 		
-				var $toolTip = $chart
+				var $chart = $("ct-chart").wrap("chart", function(){
+          
+        });
+
+        var $toolTip = $chart
 					.append('<div class="tooltip"></div>')
 					.find('.tooltip')
 					.hide();
